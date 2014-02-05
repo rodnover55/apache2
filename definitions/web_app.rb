@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-define :web_app, :template => 'web_app.conf.erb', :enable => true do
+define :web_app, :template => 'web_app.conf.erb', :cookbook => 'apache2', :enable => true do
 
   application_name = params[:name]
 
