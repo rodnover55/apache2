@@ -9,7 +9,7 @@ ServerRoot "<%= node['apache']['dir'] %>"
 # The accept serialization lock file MUST BE STORED ON A LOCAL DISK.
 #
 <% if node['lsb']['codename'] == 'saucy' %>
-Mutex file:/var/lock/apache2 default
+Mutex file:${APACHE_LOCK_DIR} default
 <% elsif %w[debian].include?(node['platform_family']) -%>
 LockFile /var/lock/apache2/accept.lock
 <% elsif %w[freebsd].include?(node['platform_family']) -%>
@@ -22,7 +22,11 @@ LockFile logs/accept.lock
 # PidFile: The file in which the server should record its process
 # identification number when it starts.
 #
+<% if node['lsb']['codename'] == 'saucy' %>
+PidFile ${APACHE_PID_FILE}
+<% else %>
 PidFile <%= node['apache']['pid_file'] %>
+<% end %>
 
 #
 # Timeout: The number of seconds before receives and sends time out.
