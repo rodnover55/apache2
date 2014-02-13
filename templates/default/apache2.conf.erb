@@ -8,7 +8,9 @@ ServerRoot "<%= node['apache']['dir'] %>"
 #
 # The accept serialization lock file MUST BE STORED ON A LOCAL DISK.
 #
-<% if %w[debian].include?(node['platform_family']) -%>
+<% if node['lsb']['codename'] == 'saucy' %>
+Mutex file:/var/lock/apache2 default
+<% elif %w[debian].include?(node['platform_family']) -%>
 LockFile /var/lock/apache2/accept.lock
 <% elsif %w[freebsd].include?(node['platform_family']) -%>
 LockFile /var/log/accept.lock
